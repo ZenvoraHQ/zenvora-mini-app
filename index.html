@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENVORA</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#080d19;
+ color:white;
+ font-family:Arial,sans-serif;
+ text-align:center;
+}
+header{
+ padding:25px;
+ background:linear-gradient(135deg,#101e39,#080d19);
+ border-bottom:1px solid #c99b38;
+}
+.logo{
+ font-size:38px;
+ font-weight:bold;
+ color:#e9bd55;
+ letter-spacing:4px;
+ text-shadow:0 0 20px #b88632;
+}
+.subtitle{color:#b6c4d8;margin-top:8px}
+.container{padding:20px;max-width:480px;margin:auto}
+.card{
+ background:linear-gradient(145deg,#192945,#101827);
+ border:1px solid #bd963f;
+ border-radius:18px;
+ padding:22px;
+ margin:16px 0;
+}
+.coin{font-size:65px}
+.balance{font-size:34px;color:#f4cb62;font-weight:bold}
+h2{color:#eac45d}
+button{
+ border:1px solid #e0b94f;
+ border-radius:12px;
+ padding:14px 22px;
+ background:linear-gradient(135deg,#e9c35e,#a87522);
+ color:#101827;
+ font-size:16px;
+ font-weight:bold;
+ margin:7px;
+ cursor:pointer;
+}
+button:active{transform:scale(.96)}
+nav{display:flex;justify-content:center;flex-wrap:wrap}
+select{
+ padding:12px;
+ border-radius:10px;
+ background:#18243a;
+ color:white;
+ border:1px solid #c69b40;
+ width:90%;
+}
+.small{color:#aebbd0;font-size:13px}
+footer{padding:25px;color:#8996a9}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">ZENVORA</div>
+ <div class="subtitle">PLAY • EARN • GROW</div>
+</header>
+
+<div class="container">
+
+ <div class="card">
+  <h2 id="welcome">Welcome to ZENVORA</h2>
+  <div class="coin">🪙</div>
+  <div class="small">YOUR ZVC BALANCE</div>
+  <div class="balance" id="balance">0 ZVC</div>
+  <button onclick="collect()">COLLECT ZVC +10</button>
+ </div>
+
+ <div class="card">
+  <h2>🌞 Daily Rewards</h2>
+  <p>Daily virtual reward: 20 ZVC</p>
+  <button onclick="daily()">CLAIM DAILY REWARD</button>
+  <p class="small">Demo points only. No cash value.</p>
+ </div>
+
+ <div class="card">
+  <h2>⚔️ Missions</h2>
+  <p>Complete missions and collect points.</p>
+  <button onclick="collectMission()">Complete Demo Mission +25</button>
+ </div>
+
+ <div class="card">
+  <h2>👥 Invite Friends</h2>
+  <p>Share ZENVORA with your friends.</p>
+  <button onclick="invite()">INVITE FRIENDS</button>
+ </div>
+
+ <div class="card">
+  <h2>🌍 Language</h2>
+  <select id="language" onchange="changeLanguage()">
+   <option value="en">🇬🇧 English</option>
+   <option value="fa">🇮🇷 فارسی</option>
+   <option value="ps">🇦🇫 دری</option>
+   <option value="ar">🇸🇦 العربية</option>
+   <option value="tr">🇹🇷 Türkçe</option>
+   <option value="ru">🇷🇺 Русский</option>
+   <option value="zh">🇨🇳 中文</option>
+   <option value="hi">🇮🇳 हिन्दी</option>
+   <option value="ur">🇵🇰 اردو</option>
+   <option value="fr">🇫🇷 Français</option>
+   <option value="de">🇩🇪 Deutsch</option>
+   <option value="es">🇪🇸 Español</option>
+   <option value="pt">🇵🇹 Português</option>
+   <option value="ja">🇯🇵 日本語</option>
+   <option value="ko">🇰🇷 한국어</option>
+   <option value="it">🇮🇹 Italiano</option>
+   <option value="id">🇮🇩 Indonesia</option>
+   <option value="bn">🇧🇩 বাংলা</option>
+   <option value="th">🇹🇭 ไทย</option>
+   <option value="vi">🇻🇳 Tiếng Việt</option>
+  </select>
+ </div>
+
+ <div class="card">
+  <h2>👤 Profile</h2>
+  <p>Welcome, ZENVORA Player!</p>
+  <p class="small">Your global gaming journey starts here.</p>
+ </div>
+
+</div>
+
+<footer>
+ ZENVORA © 2026<br>
+ Play • Earn • Grow
+</footer>
+
+<script>
+let balance=Number(localStorage.getItem("zvc")||0);
+
+function update(){
+ document.getElementById("balance").innerText=balance+" ZVC";
+ localStorage.setItem("zvc",balance);
+}
+
+function collect(){
+ balance+=10;
+ update();
+ alert("You collected 10 virtual ZVC!");
+}
+
+function daily(){
+ let today=new Date().toDateString();
+ if(localStorage.getItem("daily")==today){
+  alert("Daily reward already claimed!");
+  return;
+ }
+ balance+=20;
+ localStorage.setItem("daily",today);
+ update();
+ alert("20 virtual ZVC added!");
+}
+
+function collectMission(){
+ balance+=25;
+ update();
+ alert("25 demo points added!");
+}
+
+function invite(){
+ let text="Join ZENVORA! Play and collect virtual points.";
+ if(navigator.share){
+  navigator.share({title:"ZENVORA",text:text});
+ }else{
+  navigator.clipboard.writeText(text);
+  alert("Invitation copied!");
+ }
+}
+
+const translations={
+ en:["Welcome to ZENVORA","YOUR ZVC BALANCE"],
+ fa:["به زنوورا خوش آمدید","موجودی سکه شما"],
+ ps:["به زنوورا ښه راغلاست","ستاسو د سکو موجودي"],
+ ar:["مرحباً بك في زينفورا","رصيد عملاتك"],
+ tr:["ZENVORA'ya hoş geldiniz","ZVC BAKİYENİZ"],
+ ru:["Добро пожаловать в ZENVORA","ВАШ БАЛАНС ZVC"],
+ zh:["欢迎来到 ZENVORA","您的 ZVC 余额"],
+ hi:["ZENVORA में आपका स्वागत है","आपका ZVC बैलेंस"],
+ ur:["ZENVORA میں خوش آمدید","آپ کا ZVC بیلنس"],
+ fr:["Bienvenue chez ZENVORA","VOTRE SOLDE ZVC"],
+ de:["Willkommen bei ZENVORA","IHR ZVC-GUTHABEN"],
+ es:["Bienvenido a ZENVORA","TU SALDO ZVC"],
+ pt:["Bem-vindo à ZENVORA","SEU SALDO ZVC"],
+ ja:["ZENVORAへようこそ","ZVC残高"],
+ ko:["ZENVORA에 오신 것을 환영합니다","ZVC 잔액"],
+ it:["Benvenuto in ZENVORA","IL TUO SALDO ZVC"],
+ id:["Selamat datang di ZENVORA","SALDO ZVC ANDA"],
+ bn:["ZENVORA-তে স্বাগতম","আপনার ZVC ব্যালেন্স"],
+ th:["ยินดีต้อนรับสู่ ZENVORA","ยอดคงเหลือ ZVC"],
+ vi:["Chào mừng đến ZENVORA","SỐ DƯ ZVC"]
+};
+
+function changeLanguage(){
+ let lang=document.getElementById("language").value;
+ document.getElementById("welcome").innerText=translations[lang][0];
+ document.querySelector(".small").innerText=translations[lang][1];
+}
+update();
+</script>
+
+</body>
+</html>
